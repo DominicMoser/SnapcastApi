@@ -1,6 +1,5 @@
 package com.dmoser.codyssey.snapcast.api;
 
-import java.net.URL;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.ServiceLoader;
@@ -23,7 +22,7 @@ public interface Server {
      * @return A builder for the server class from the loaded implementation.
      */
     static ServerBuilder Builder() {
-        return ServiceLoader.load(ServerBuilder.class).findFirst().orElseThrow(()->new NoSuchElementException(NO_BUILDER_INTERFACE_FOUND));
+        return ServiceLoader.load(ServerBuilder.class).findFirst().orElseThrow(() -> new NoSuchElementException(NO_BUILDER_INTERFACE_FOUND));
     }
 
     /**
@@ -50,5 +49,30 @@ public interface Server {
      * @since 1.0.0
      */
     List<Stream> getAllStreams();
+
+    /**
+     * Creates a new {@link Stream}.
+     *
+     * @param streamConstructionMsg The msg containing all information to create this stream.
+     * @return The id of the stream.
+     * @since 2.0.0
+     */
+    String createNewStream(Stream.StreamBuilder.StreamConstructionMsg streamConstructionMsg);
+
+    /**
+     * Removes a stream.
+     *
+     * @param stream The stream to remove.
+     * @since 2.0.0
+     */
+    void removeStream(Stream stream);
+
+    /**
+     * Get all {@link Client}'s of this server.
+     *
+     * @return all clients.
+     * @since 2.0.0
+     */
+    List<Client> getAllClients();
 
 }

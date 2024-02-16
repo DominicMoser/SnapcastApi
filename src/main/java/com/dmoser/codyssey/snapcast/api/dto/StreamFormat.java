@@ -1,0 +1,15 @@
+package com.dmoser.codyssey.snapcast.api.dto;
+
+public enum StreamFormat {
+    S16LE("16");
+
+    final String format;
+
+    StreamFormat(String format){
+        this.format = format;
+    }
+
+    public String getFormat() {
+        return this.format;
+    }
+}
