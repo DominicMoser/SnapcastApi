@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.dmoser.codyssey"
-version = "2.0.0"
+version = "2.0.0-alpha"
 
 java {
     withJavadocJar()

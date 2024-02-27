@@ -98,7 +98,7 @@ public interface Stream {
             String msg;
 
             protected StreamConstructionMsg(String msg) {
-
+                this.msg = msg;
             }
 
             public String getMsg() {
