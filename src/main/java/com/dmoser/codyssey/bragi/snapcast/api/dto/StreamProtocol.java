@@ -1,4 +1,4 @@
-package com.dmoser.codyssey.snapcast.api.dto;
+package com.dmoser.codyssey.bragi.snapcast.api.dto;
 
 public enum StreamProtocol {
     PIPE("pipe"),
@@ -6,7 +6,7 @@ public enum StreamProtocol {
 
     final String protocol;
 
-    StreamProtocol(String protocol){
+    StreamProtocol(String protocol) {
         this.protocol = protocol;
     }
 

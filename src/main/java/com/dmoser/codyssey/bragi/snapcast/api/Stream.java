@@ -1,8 +1,8 @@
-package com.dmoser.codyssey.snapcast.api;
+package com.dmoser.codyssey.bragi.snapcast.api;
 
-import com.dmoser.codyssey.snapcast.api.dto.StreamFormat;
-import com.dmoser.codyssey.snapcast.api.dto.StreamRate;
-import com.dmoser.codyssey.snapcast.api.dto.StreamTCPMode;
+import com.dmoser.codyssey.bragi.snapcast.api.dto.StreamFormat;
+import com.dmoser.codyssey.bragi.snapcast.api.dto.StreamRate;
+import com.dmoser.codyssey.bragi.snapcast.api.dto.StreamTCPMode;
 
 /**
  * Represents a stream.
@@ -45,10 +45,6 @@ public interface Stream {
          */
         static StreamBuilderTcp withTcp() {
             return new StreamBuilderTcp();
-        }
-
-        static boolean checkMsg(String msg) {
-            return true;
         }
 
         /**

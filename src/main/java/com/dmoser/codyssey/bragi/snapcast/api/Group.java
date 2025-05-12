@@ -1,4 +1,4 @@
-package com.dmoser.codyssey.snapcast.api;
+package com.dmoser.codyssey.bragi.snapcast.api;
 
 import java.util.List;
 
@@ -102,6 +102,11 @@ public interface Group {
      */
     int getVolume();
 
+    /**
+     * Sets the volume of all clients in this group.
+     *
+     * @param percentage The volume in percentage a percentage of the total volume.
+     */
     void setVolume(int percentage);
 
 }

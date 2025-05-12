@@ -1,4 +1,4 @@
-package com.dmoser.codyssey.snapcast.api;
+package com.dmoser.codyssey.bragi.snapcast.api;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -14,7 +14,12 @@ import java.util.ServiceLoader;
 @SuppressWarnings("unused")
 public interface Server {
 
-    String NO_BUILDER_INTERFACE_FOUND = "No implementation of the Server.BuilderInterface was found. Please add a module containing an implementation.";
+    /**
+     * Message for the Exception when no server builder implementation exists.
+     */
+    String NO_BUILDER_INTERFACE_FOUND = "No implementation of the Server.BuilderInterface was" +
+            " found. " +
+            "Please add a module containing an implementation.";
 
     /**
      * Use the service loader to get the loaded implementation of the snapcast api.

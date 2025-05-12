@@ -1,4 +1,4 @@
-package com.dmoser.codyssey.snapcast.api;
+package com.dmoser.codyssey.bragi.snapcast.api;
 
 /**
  * Represents an actual device with the Snapclient software.

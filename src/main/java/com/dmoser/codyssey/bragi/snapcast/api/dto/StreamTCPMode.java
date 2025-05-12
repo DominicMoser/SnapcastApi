@@ -1,4 +1,4 @@
-package com.dmoser.codyssey.snapcast.api.dto;
+package com.dmoser.codyssey.bragi.snapcast.api.dto;
 
 public enum StreamTCPMode {
     CLIENT("client", "server"),
@@ -7,16 +7,16 @@ public enum StreamTCPMode {
     private final String streamMode;
     private final String snapserverMode;
 
-    StreamTCPMode(String streamMode, String snapserverMode){
+    StreamTCPMode(String streamMode, String snapserverMode) {
         this.streamMode = streamMode;
         this.snapserverMode = snapserverMode;
     }
 
-    public String getSnapserverMode(){
+    public String getSnapserverMode() {
         return this.snapserverMode;
     }
 
-    public String getStreamMode(){
+    public String getStreamMode() {
         return this.streamMode;
     }
 }

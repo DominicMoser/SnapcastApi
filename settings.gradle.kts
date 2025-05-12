@@ -1,2 +1,2 @@
-rootProject.name = "SnapcastAPI"
+rootProject.name = "api"
 

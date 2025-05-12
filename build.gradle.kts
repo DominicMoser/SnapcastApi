@@ -1,22 +1,26 @@
 plugins {
     id("java")
+    id("com.github.gmazzo.buildconfig") version "5.6.5"
     id("maven-publish")
 }
 
-group = "com.dmoser.codyssey"
-version = "2.0.0"
+val apiVersion: String by project
+val apiVersionString = apiVersion as? String
+
+group = "com.dmoser.codyssey.bragi.snapcast"
+version = apiVersion
 
 java {
     withJavadocJar()
     withSourcesJar()
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+}
+
 repositories {
     mavenCentral()
-    maven {
-        isAllowInsecureProtocol = true
-        url = uri(findProperty("repositoryUrl") as String)
-    }
 }
 
 publishing {
@@ -45,4 +49,51 @@ dependencies {
 
 tasks.getByName<Test>("test") {
     useJUnitPlatform()
+}
+
+tasks.named<Javadoc>("javadoc") {
+    dependsOn("addJavadocToBuildConfig") // Ensure Javadoc is added before publishing
+    isFailOnError = true
+//      (options as StandardJavadocDocletOptions).apply {
+//        addBooleanOption("Xwerror", true)
+//    }
+}
+
+buildConfig {
+    packageName("com.dmoser.codyssey.bragi.snapcast.api")
+    className("Constants")
+    documentation.set("Automatically generated Class with runtime constants defined in the gradle.properties file.")
+    buildConfigField("String", "API_VERSION", apiVersionString)
+}
+// Generate doc for Constants file.
+tasks.register("addJavadocToBuildConfig") {
+    group = "documentation" // This groups the task under the 'documentation' section
+    dependsOn("generateBuildConfig")
+    doLast {
+        val constantsFile = file(
+            "build/generated/sources/buildConfig/main/com/dmoser/codyssey/bragi/snapcast/api/Constants" +
+                    ".java"
+        )
+        println(constantsFile.path)
+        if (constantsFile.exists()) {
+            println("fileExists")
+            // Read the file
+            var content = constantsFile.readText()
+
+            // Add Javadoc comments to fields
+            content = content.replace(
+                "public static",
+                "/** Automatically generated Value. */\n  public static"
+            )
+
+            println(content)
+
+            // Write the modified content back to the file
+            constantsFile.writeText(content)
+        }
+    }
+}
+
+tasks.named("publish") {
+    dependsOn("test", "javadoc")
 }
