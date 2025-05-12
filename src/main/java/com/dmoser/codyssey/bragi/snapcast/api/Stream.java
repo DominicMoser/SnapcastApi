@@ -47,6 +47,14 @@ public interface Stream {
             return new StreamBuilderTcp();
         }
 
+        static StreamBuilderFile withFile() {
+            return new StreamBuilderFile();
+        }
+
+        static StreamBuilderMsg withMsg() {
+            return new StreamBuilderMsg();
+        }
+
         /**
          * Used to create {@link Stream}'s using the TCP protocol.
          *
@@ -85,6 +93,45 @@ public interface Stream {
         }
 
         /**
+         * Used to create {@link Stream}'s using a File location
+         *
+         * @since 2.0.0
+         */
+        class StreamBuilderFile implements StreamBuilder {
+
+            /**
+             * Creates the StreamConstruction message.
+             *
+             * @param name     The name this stream should have.
+             * @param channels The number of channels of this stream.
+             * @param rate     The rate in which the audio is formatted.
+             * @param format   The format of the stream.
+             * @return The message used in {@link Server#createNewStream(StreamConstructionMsg)} for creating new
+             * Streams.
+             * @since 2.0.0
+             */
+            public StreamConstructionMsg create(String path, String codec, String name, int channels,
+                                                StreamRate rate, StreamFormat format) {
+                String template = "file:///%s?chunk_ms=20&codec=%s&name=%s&sampleformat=%s:%s:%d";
+
+                String msg = template.formatted(
+                        codec,
+                        name,
+                        rate.getRate(),
+                        format.getFormat(),
+                        channels);
+                return new StreamConstructionMsg(msg);
+            }
+
+        }
+
+        class StreamBuilderMsg implements StreamBuilder {
+            public StreamConstructionMsg create(String msg) {
+                return new StreamConstructionMsg(msg);
+            }
+        }
+
+        /**
          * The construction message used in {@link Server#createNewStream(StreamConstructionMsg)}.
          *
          * @since 2.0.0
@@ -93,7 +140,7 @@ public interface Stream {
 
             String msg;
 
-            protected StreamConstructionMsg(String msg) {
+            public StreamConstructionMsg(String msg) {
                 this.msg = msg;
             }
 
