@@ -23,7 +23,7 @@ public class Group extends ApiEndpoint {
      * @return The name.
      * @since 1.0.0
      */
-    String getName(String id) {
+    public String getName(String id) {
         var groupOptional = state.getGroup(id);
         if (groupOptional.isEmpty()) {
             return "";
@@ -38,7 +38,7 @@ public class Group extends ApiEndpoint {
      * @param newName The new name.
      * @since 1.0.0
      */
-    void setName(String groupId, String newName) {
+    public void setName(String groupId, String newName) {
         String id = state.getGroup(groupId).map(group -> group.id).orElse("");
         communication.sendRequest(new SetName.Request(id, newName));
     }
@@ -49,7 +49,7 @@ public class Group extends ApiEndpoint {
      * @return A list of clients.
      * @since 1.0.0
      */
-    List<com.dmoser.codyssey.bragi.snapcast.api.model.group.Client> getClients(String groupId) {
+    public List<com.dmoser.codyssey.bragi.snapcast.api.model.group.Client> getClients(String groupId) {
         return state.getGroup(groupId).map(group -> group.clients).orElse(List.of());
     }
 
@@ -60,7 +60,7 @@ public class Group extends ApiEndpoint {
      * @param clients The new clients.
      * @since 1.0.0
      */
-    void setClients(String groupId, Set<String> clientIds) {
+    public void setClients(String groupId, Set<String> clientIds) {
         communication.sendRequest(new SetClients.Request(groupId, clientIds));
     }
 
@@ -70,7 +70,7 @@ public class Group extends ApiEndpoint {
      * @param client The new client.
      * @since 1.0.0
      */
-    void addClient(String groupId, String clientId) {
+    public void addClient(String groupId, String clientId) {
 
         Set<String> clientIds = state.getGroup(groupId)
                 .map(group -> group.clients)
@@ -90,7 +90,7 @@ public class Group extends ApiEndpoint {
      * @return True when this group is muted.
      * @since 1.0.0
      */
-    boolean isMuted(String groupId) {
+    public boolean isMuted(String groupId) {
         return state.getGroup(groupId)
                 .map(group -> group.muted)
                 .orElse(true);
@@ -102,7 +102,7 @@ public class Group extends ApiEndpoint {
      * @param mute True when this group should be muted.
      * @since 1.0.0
      */
-    void setMuted(String groupId, boolean mute) {
+    public void setMuted(String groupId, boolean mute) {
         communication.sendRequest(new SetMute.Request(groupId, mute));
     }
 
@@ -112,7 +112,7 @@ public class Group extends ApiEndpoint {
      * @return The current stream.
      * @since 1.0.0
      */
-    com.dmoser.codyssey.bragi.snapcast.api.model.Stream getStream(String groupId) {
+    public com.dmoser.codyssey.bragi.snapcast.api.model.Stream getStream(String groupId) {
         // TODO Error handling
         return state.getGroup(groupId)
                 .map(group -> group.stream_id)
@@ -127,7 +127,7 @@ public class Group extends ApiEndpoint {
      * @param stream The new stream.
      * @since 1.0.0
      */
-    void setStream(String groupId, String streamId) {
+    public void setStream(String groupId, String streamId) {
         communication.sendRequest(new SetStream.Request(groupId, streamId));
     }
 
@@ -137,7 +137,7 @@ public class Group extends ApiEndpoint {
      * @return The average volume.
      * @since 1.0.0
      */
-    int getVolume(String groupId) {
+    public int getVolume(String groupId) {
         return state.getGroup(groupId)
                 .map(group -> group.clients
                         .stream()
@@ -152,7 +152,7 @@ public class Group extends ApiEndpoint {
      *
      * @param percentage The volume in percentage a percentage of the total volume.
      */
-    void setVolume(String groupId, int percentage) {
+    public void setVolume(String groupId, int percentage) {
         state.getGroup(groupId)
                 .stream()
                 .flatMap(group -> group.clients.stream())
@@ -171,7 +171,7 @@ public class Group extends ApiEndpoint {
      * @return All active groups.
      * @since 1.0.0
      */
-    List<com.dmoser.codyssey.bragi.snapcast.api.model.Group> getActiveGroups() {
+    public List<com.dmoser.codyssey.bragi.snapcast.api.model.Group> getActiveGroups() {
         return state.getGroups()
                 .stream()
                 .filter(
@@ -185,7 +185,7 @@ public class Group extends ApiEndpoint {
      * @return all groups.
      * @since 1.0.0
      */
-    List<com.dmoser.codyssey.bragi.snapcast.api.model.Group> getAllGroups() {
+    public List<com.dmoser.codyssey.bragi.snapcast.api.model.Group> getAllGroups() {
         return state.getGroups();
     }
 

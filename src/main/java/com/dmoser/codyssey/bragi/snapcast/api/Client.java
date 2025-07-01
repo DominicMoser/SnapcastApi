@@ -19,7 +19,7 @@ public class Client extends ApiEndpoint {
      * @param id The id of this client.
      * @since 1.0.0
      */
-    void setName(String id, String name) {
+    public void setName(String id, String name) {
         communication.sendRequest(new SetName.Request(id, name));
     }
 
@@ -29,7 +29,7 @@ public class Client extends ApiEndpoint {
      * @return True when the client is connected.
      * @since 1.0.0
      */
-    boolean isConnected(String id) {
+    public boolean isConnected(String id) {
         var client = state.getClient(id);
         return client.map(value -> value.connected).orElse(false);
     }
@@ -40,7 +40,7 @@ public class Client extends ApiEndpoint {
      * @return The latency in ms.
      * @since 1.0.0
      */
-    int getLatency(String id) {
+    public int getLatency(String id) {
         var client = state.getClient(id);
         return client.map(value -> value.config.latency).orElse(0);
     }
@@ -51,7 +51,7 @@ public class Client extends ApiEndpoint {
      * @param latency The new latency of this client.
      * @since 1.0.0
      */
-    void setLatency(String id, int latency) {
+    public void setLatency(String id, int latency) {
         communication.sendRequest(new SetLatency.Request(id, latency));
     }
 
@@ -61,7 +61,7 @@ public class Client extends ApiEndpoint {
      * @return True when this client is muted.
      * @since 1.0.0
      */
-    boolean isMuted(String id) {
+    public boolean isMuted(String id) {
         var client = state.getClient(id);
         return client.map(value -> value.config.volume.muted()).orElse(false);
     }
@@ -72,7 +72,7 @@ public class Client extends ApiEndpoint {
      * @param mute True when this client should be muted.
      * @since 1.0.0
      */
-    void setMuted(String id, boolean setMuted) {
+    public void setMuted(String id, boolean setMuted) {
         var clientOptional = state.getClient(id);
         if (clientOptional.isEmpty()) {
             return;
@@ -87,7 +87,7 @@ public class Client extends ApiEndpoint {
      * @return The current volume as an integer in the range from 0 to 100%.
      * @since 1.0.0
      */
-    int getVolume(String id) {
+    public int getVolume(String id) {
         return state.getClient(id).map(client -> client.config.volume.percent()).orElse(0);
     }
 
@@ -98,7 +98,7 @@ public class Client extends ApiEndpoint {
      * @param percentage The new volume.
      * @since 1.0.0
      */
-    void setVolume(String id, int percentage) {
+    public void setVolume(String id, int percentage) {
         var clientOptional = state.getClient(id);
         if (clientOptional.isEmpty()) {
             return;
@@ -113,7 +113,7 @@ public class Client extends ApiEndpoint {
      * @return all clients.
      * @since 2.0.0
      */
-    List<com.dmoser.codyssey.bragi.snapcast.api.model.group.Client> getAllClients() {
+    public List<com.dmoser.codyssey.bragi.snapcast.api.model.group.Client> getAllClients() {
         return state.getGroups()
                 .stream()
                 .flatMap(group -> group.clients.stream())
