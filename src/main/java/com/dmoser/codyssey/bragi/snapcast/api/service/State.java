@@ -47,17 +47,13 @@ public class State {
     }
 
     public void update(Group group) {
-        if (server.groups.contains(group)) {
-            server.groups.remove(group);
-            server.groups.add(group);
-        }
+        server.groups.remove(group);
+        server.groups.add(group);
     }
 
     public void update(Stream stream) {
-        if (server.streams.contains(stream)) {
-            server.streams.remove(stream);
-            server.streams.add(stream);
-        }
+        server.streams.remove(stream);
+        server.streams.add(stream);
     }
 
     public void update() {
