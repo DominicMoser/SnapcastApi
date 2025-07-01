@@ -22,9 +22,7 @@ public class Communication extends org.java_websocket.client.WebSocketClient {
         state.setCommunication(this);
         new Thread(() -> {
             while (true) {
-                System.out.println("Connecting");
                 while (this.isOpen()) {
-                    System.out.println("Open");
                     synchronized (reconnectSemaphore) {
                         try {
                             reconnectSemaphore.wait();
@@ -34,10 +32,8 @@ public class Communication extends org.java_websocket.client.WebSocketClient {
                     }
                 }
                 try {
-                    System.out.println("ConnectBlocking");
                     this.reconnectBlocking();
                     if (this.isOpen()) {
-                        System.out.println("Open");
                         this.connected = true;
                     }
                 } catch (InterruptedException e) {

@@ -66,12 +66,6 @@ public class Client extends ApiEndpoint {
         return client.map(value -> value.config.volume.muted()).orElse(false);
     }
 
-    /**
-     * Sets if this client is muted or unmuted.
-     *
-     * @param mute True when this client should be muted.
-     * @since 1.0.0
-     */
     public void setMuted(String id, boolean setMuted) {
         var clientOptional = state.getClient(id);
         if (clientOptional.isEmpty()) {

@@ -53,23 +53,10 @@ public class Group extends ApiEndpoint {
         return state.getGroup(groupId).map(group -> group.clients).orElse(List.of());
     }
 
-    /**
-     * Replaces all existing {@link Client}'s with those of the list. Clients which where part of this group, but are
-     * not in this list will be removed from the group.
-     *
-     * @param clients The new clients.
-     * @since 1.0.0
-     */
     public void setClients(String groupId, Set<String> clientIds) {
         communication.sendRequest(new SetClients.Request(groupId, clientIds));
     }
 
-    /**
-     * Adds a new {@link Client} to this group without removing old ones.
-     *
-     * @param client The new client.
-     * @since 1.0.0
-     */
     public void addClient(String groupId, String clientId) {
 
         Set<String> clientIds = state.getGroup(groupId)
@@ -106,12 +93,6 @@ public class Group extends ApiEndpoint {
         communication.sendRequest(new SetMute.Request(groupId, mute));
     }
 
-    /**
-     * Get the {@link com.dmoser.codyssey.bragi.snapcast.api.old.Stream} which this group is currently playing.
-     *
-     * @return The current stream.
-     * @since 1.0.0
-     */
     public com.dmoser.codyssey.bragi.snapcast.api.model.Stream getStream(String groupId) {
         // TODO Error handling
         return state.getGroup(groupId)
@@ -121,12 +102,6 @@ public class Group extends ApiEndpoint {
                 .get();
     }
 
-    /**
-     * Sets the {@link com.dmoser.codyssey.bragi.snapcast.api.old.Stream} this group is currently playing to a different stream.
-     *
-     * @param stream The new stream.
-     * @since 1.0.0
-     */
     public void setStream(String groupId, String streamId) {
         communication.sendRequest(new SetStream.Request(groupId, streamId));
     }
