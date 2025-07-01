@@ -30,23 +30,13 @@ publishing {
             from(components["java"])
         }
     }
-    repositories {
-        maven {
-            isAllowInsecureProtocol = true
-            url = uri(findProperty("repositoryUrl") as String)
-            credentials {
-                username = findProperty("repositoryUsername") as String
-                password = findProperty("repositoryPassword") as String
-            }
-        }
-    }
 }
 
 dependencies {
     implementation("com.fasterxml.jackson.core:jackson-databind:2.15.1")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.15.1")
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.15.1") // or latest version
-    
+
     implementation("org.java-websocket:Java-WebSocket:1.5.4")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
