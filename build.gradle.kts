@@ -43,8 +43,17 @@ publishing {
 }
 
 dependencies {
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.1")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.15.1")
+    implementation("org.java-websocket:Java-WebSocket:1.5.4")
+
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+
+    implementation("org.apache.logging.log4j:log4j-api:2.22.1")
+    runtimeOnly("org.apache.logging.log4j:log4j-core:2.22.1")
+    implementation("org.slf4j:slf4j-log4j12:2.0.17")
+
 }
 
 tasks.getByName<Test>("test") {
@@ -54,9 +63,6 @@ tasks.getByName<Test>("test") {
 tasks.named<Javadoc>("javadoc") {
     dependsOn("addJavadocToBuildConfig") // Ensure Javadoc is added before publishing
     isFailOnError = true
-//      (options as StandardJavadocDocletOptions).apply {
-//        addBooleanOption("Xwerror", true)
-//    }
 }
 
 buildConfig {

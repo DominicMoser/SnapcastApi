@@ -1,0 +1,26 @@
+package com.dmoser.codyssey.bragi.snapcast.api.request.client;
+
+import com.dmoser.codyssey.bragi.snapcast.api.model.group.client.Volume;
+import com.dmoser.codyssey.bragi.snapcast.api.request.Notification;
+import com.dmoser.codyssey.bragi.snapcast.api.request.NotificationMethod;
+import com.dmoser.codyssey.bragi.snapcast.api.service.State;
+
+public record OnVolumeChangedNotification(
+        String jsonrpc,
+        NotificationMethod notificationMethod,
+        Params params
+) implements Notification {
+
+    @Override
+    public void process(State state) {
+        state.getServer()
+                .groups
+                .stream()
+                .flatMap(group -> group.clients.stream())
+                .filter(client -> client.id.equals(params.id))
+                .forEach(client -> client.config.volume = params.volume);
+    }
+
+    public record Params(String id, Volume volume) {
+    }
+}
