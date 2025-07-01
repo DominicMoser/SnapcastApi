@@ -8,6 +8,9 @@ import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
 import java.util.Optional;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Communication extends org.java_websocket.client.WebSocketClient {
 
@@ -41,6 +44,16 @@ public class Communication extends org.java_websocket.client.WebSocketClient {
                 }
             }
         }).start();
+
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+        Runnable task = () -> {
+            if (isOpen()) {
+                sendRequest(new GetStatus.Request());
+            }
+        };
+
+        scheduler.scheduleAtFixedRate(task, 2, 1, TimeUnit.SECONDS);
         connect();
     }
 
