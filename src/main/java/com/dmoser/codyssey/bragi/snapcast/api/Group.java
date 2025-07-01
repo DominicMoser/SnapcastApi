@@ -103,7 +103,7 @@ public class Group extends ApiEndpoint {
     }
 
     public void setStream(String groupId, String streamId) {
-        communication.sendRequest(new SetStream.Request(groupId, streamId));
+        state.getGroup(streamId).ifPresent((g) -> communication.sendRequest(new SetStream.Request(g.id, streamId)));
     }
 
     /**
