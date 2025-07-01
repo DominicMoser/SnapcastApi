@@ -72,7 +72,6 @@ public class Communication extends org.java_websocket.client.WebSocketClient {
             semaphore.notifyAll();
             sendRequest(new GetStatus.Request());
         }
-
     }
 
     @Override

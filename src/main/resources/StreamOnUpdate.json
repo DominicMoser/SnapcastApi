@@ -1,0 +1,35 @@
+{
+  "jsonrpc": "2.0",
+  "method": "Stream.OnUpdate",
+  "params": {
+    "id": "radio",
+    "stream": {
+      "id": "radio",
+      "properties": {
+        "canControl": false,
+        "canGoNext": false,
+        "canGoPrevious": false,
+        "canPause": false,
+        "canPlay": false,
+        "canSeek": false
+      },
+      "status": "playing",
+      "uri": {
+        "fragment": "",
+        "host": "0.0.0.0:53772",
+        "path": "",
+        "query": {
+          "chunk_ms": "20",
+          "codec": "flac",
+          "controlscript": "wsProxyControlScript.py",
+          "controlscriptparams": "--host=bragi-radio:53772",
+          "mode": "server",
+          "name": "radio",
+          "sampleformat": "48000:16:2"
+        },
+        "raw": "tcp://0.0.0.0:53772/?chunk_ms=20&codec=flac&controlscript=wsProxyControlScript.py&controlscriptparams=--host=bragi-radio:53772&mode=server&name=radio&sampleformat=48000:16:2",
+        "scheme": "tcp"
+      }
+    }
+  }
+}

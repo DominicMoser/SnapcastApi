@@ -10,6 +10,10 @@ public record QuerySchema(
         String name,
         String sampleformat,
         @JsonInclude(JsonInclude.Include.NON_ABSENT)
-        Optional<String> mode
+        Optional<String> mode,
+        @JsonInclude(JsonInclude.Include.NON_ABSENT)
+        Optional<String> controlscript,
+        @JsonInclude(JsonInclude.Include.NON_ABSENT)
+        Optional<String> controlscriptparams
 ) {
 }

@@ -34,6 +34,10 @@ public class Api {
         return Constants.API_VERSION;
     }
 
+    public boolean isReady() {
+        return communication.isOpen() && state.getServer() != null;
+    }
+
     public Server server() {
         return server;
     }
