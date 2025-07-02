@@ -7,7 +7,7 @@ import com.dmoser.codyssey.bragi.snapcast.api.service.State;
 
 public record OnVolumeChangedNotification(
         String jsonrpc,
-        NotificationMethod notificationMethod,
+        NotificationMethod method,
         Params params
 ) implements Notification {
 
