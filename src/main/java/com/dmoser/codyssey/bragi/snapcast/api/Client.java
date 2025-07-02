@@ -20,7 +20,7 @@ public class Client extends ApiEndpoint {
      * @since 1.0.0
      */
     public void setName(String id, String name) {
-        communication.sendRequest(new SetName.Request(id, name));
+        state.getClient(id).ifPresent(client -> communication.sendRequest(new SetName.Request(id, name)));
     }
 
     /**
@@ -52,7 +52,7 @@ public class Client extends ApiEndpoint {
      * @since 1.0.0
      */
     public void setLatency(String id, int latency) {
-        communication.sendRequest(new SetLatency.Request(id, latency));
+        state.getClient(id).ifPresent(client -> communication.sendRequest(new SetLatency.Request(id, latency)));
     }
 
     /**
