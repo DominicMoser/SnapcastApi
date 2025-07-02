@@ -30,6 +30,16 @@ publishing {
             from(components["java"])
         }
     }
+    repositories {
+        maven {
+            isAllowInsecureProtocol = true
+            url = uri(findProperty("repositoryUrl") as String)
+            credentials {
+                username = findProperty("repositoryUsername") as String
+                password = findProperty("repositoryPassword") as String
+            }
+        }
+    }
 }
 
 dependencies {

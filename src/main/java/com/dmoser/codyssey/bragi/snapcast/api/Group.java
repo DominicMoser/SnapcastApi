@@ -9,6 +9,7 @@ import com.dmoser.codyssey.bragi.snapcast.api.service.Communication;
 import com.dmoser.codyssey.bragi.snapcast.api.service.State;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -54,7 +55,15 @@ public class Group extends ApiEndpoint {
     }
 
     public void setClients(String groupId, Set<String> clientIds) {
-        communication.sendRequest(new SetClients.Request(groupId, clientIds));
+        var group = state.getGroup(groupId);
+        var clients = clientIds.stream()
+                .map(state::getClient)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(client -> client.id)
+                .collect(Collectors.toSet());
+        group.ifPresent(g -> communication.sendRequest(new SetClients.Request(g.id, clients)));
+
     }
 
     public void addClient(String groupId, String clientId) {
