@@ -1,35 +1,25 @@
 plugins {
     id("java")
+    // Plugin to generate a class containing constants defined in the build system (e.g., from gradle.properties)
     id("com.github.gmazzo.buildconfig") version "5.6.5"
     id("maven-publish")
 }
 
-val apiVersion: String by project
-val apiVersionString = apiVersion as? String
+// Retrieve project properties from gradle.properties
+val projectVersion: String by project
+val groupName: String by project
 
-group = "com.dmoser.codyssey.bragi.snapcast"
-version = apiVersion
+group = groupName
+version = projectVersion
 
 java {
     withJavadocJar()
     withSourcesJar()
-}
-
-java {
     sourceCompatibility = JavaVersion.VERSION_21
 }
 
 repositories {
     mavenCentral()
-}
-
-publishing {
-    publications {
-        create<MavenPublication>(project.name) {
-            artifactId = project.name
-            from(components["java"])
-        }
-    }
 }
 
 dependencies {
@@ -48,50 +38,68 @@ dependencies {
 
 }
 
-tasks.getByName<Test>("test") {
+publishing {
+    publications {
+        create<MavenPublication>(project.name) {
+            artifactId = project.name
+            from(components["java"])
+        }
+    }
+}
+
+// Configure the constants that should be created
+buildConfig {
+    packageName(project.group.toString().lowercase() + "." + project.name.lowercase())
+    className("Constants")
+    documentation.set("Automatically generated class with runtime constants defined in the gradle.properties file.")
+    buildConfigField("String", "API_VERSION", projectVersion as? String)
+}
+
+tasks.test {
     useJUnitPlatform()
 }
 
-tasks.named<Javadoc>("javadoc") {
-    dependsOn("addJavadocToBuildConfig") // Ensure Javadoc is added before publishing
+tasks.javadoc {
+    // First, generate some comments for the generated Constants class
+    dependsOn("addJavadocToBuildConfig")
+    // Fail if Javadoc is incomplete
     isFailOnError = true
+    (options as StandardJavadocDocletOptions).apply {
+        addBooleanOption("Xwerror", true)
+        addStringOption("Xdoclint:all")
+    }
 }
 
-buildConfig {
-    packageName("com.dmoser.codyssey.bragi.snapcast.api")
-    className("Constants")
-    documentation.set("Automatically generated Class with runtime constants defined in the gradle.properties file.")
-    buildConfigField("String", "API_VERSION", apiVersionString)
+tasks.publish {
+    // Only publish when tests run without errors and Javadocs are generated
+    dependsOn("test", "javadoc")
 }
-// Generate doc for Constants file.
+
 tasks.register("addJavadocToBuildConfig") {
-    group = "documentation" // This groups the task under the 'documentation' section
+    // Groups the task under the 'documentation' section
+    group = "documentation"
     dependsOn("generateBuildConfig")
     doLast {
         val constantsFile = file(
-            "build/generated/sources/buildConfig/main/com/dmoser/codyssey/bragi/snapcast/api/Constants" +
-                    ".java"
+            "build/generated/sources/buildConfig/main/" +
+                    project.group.toString().lowercase().replace(".", "/") +
+                    "/" +
+                    project.name.lowercase() +
+                    "/" +
+                    "Constants.java"
         )
         println(constantsFile.path)
         if (constantsFile.exists()) {
-            println("fileExists")
             // Read the file
             var content = constantsFile.readText()
 
             // Add Javadoc comments to fields
             content = content.replace(
                 "public static",
-                "/** Automatically generated Value. */\n  public static"
+                "/** Automatically generated value. */\n  public static"
             )
-
-            println(content)
-
             // Write the modified content back to the file
             constantsFile.writeText(content)
         }
     }
-}
-
-tasks.named("publish") {
-    dependsOn("test", "javadoc")
 }

@@ -1,11 +1,11 @@
-import com.dmoser.codyssey.bragi.snapcast.api.model.control.Command;
-import com.dmoser.codyssey.bragi.snapcast.api.model.setProperty.PropertyType;
-import com.dmoser.codyssey.bragi.snapcast.api.model.stream.properties.LoopStatus;
-import com.dmoser.codyssey.bragi.snapcast.api.request.BaseRequest;
-import com.dmoser.codyssey.bragi.snapcast.api.request.server.GetStatus;
-import com.dmoser.codyssey.bragi.snapcast.api.request.stream.Control;
-import com.dmoser.codyssey.bragi.snapcast.api.request.stream.SetProperty;
-import com.dmoser.codyssey.bragi.snapcast.api.service.UtilityService;
+import com.dmoser.codyssey.snapcast.api.model.control.Command;
+import com.dmoser.codyssey.snapcast.api.model.setProperty.PropertyType;
+import com.dmoser.codyssey.snapcast.api.model.stream.properties.LoopStatus;
+import com.dmoser.codyssey.snapcast.api.request.BaseRequest;
+import com.dmoser.codyssey.snapcast.api.request.server.GetStatus;
+import com.dmoser.codyssey.snapcast.api.request.stream.Control;
+import com.dmoser.codyssey.snapcast.api.request.stream.SetProperty;
+import com.dmoser.codyssey.snapcast.api.service.UtilityService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -51,7 +51,7 @@ public class RequestTest {
                 PropertyType.RATE,
                 10
         );
-        
+
         var expected1 = om.readTree("{\"id\": " + testRequest1.id + ", \"jsonrpc\": \"2.0\", \"method\": \"Stream" +
                 ".SetProperty\", " +
                 "\"params\":" +

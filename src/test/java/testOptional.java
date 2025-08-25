@@ -1,4 +1,4 @@
-import com.dmoser.codyssey.bragi.snapcast.api.service.UtilityService;
+import com.dmoser.codyssey.snapcast.api.service.UtilityService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
